@@ -1,0 +1,118 @@
+﻿
+<link href="~/css/HomeIndex.css" rel="stylesheet" />
+<link href="~/css/HomeCreateApp.css" rel="stylesheet" />
+<link href="~/css/BgImg.css" rel="stylesheet" />
+
+<style>
+    .setBgImg{
+        margin-left:0px;
+    }
+    
+</style>
+
+
+
+@section userNavItem{
+    <li class="nav-item dropdown float-lg-right">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">@Context.Session.GetString("userName")</a>
+        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Change Password</a>
+            <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+        </div>
+    </li>
+
+}
+
+<div style="height:737px;" class="setBgImg">
+    <section class="contentMainBody ml-0">
+        <div id="contentBody">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-6 ml-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="font-weight-bolder">Create Database/Directory </h5>
+                            </div>
+                            <form action="createDatabase" method="post" novalidate id="databaseForm">
+                                <div class="card-body">
+                                    <h6>Enter Your Directory Name</h6>
+                                    <input type="text" placeholder="Database Name" name="databaseName" 
+                                           id="databaseName" required class="form-control form-control-md mt-1">
+                                    <span id="invalidDb" style="color:red">* Invalid Name</span><br />
+                                    <span class="text-danger ml-1">@ViewBag.dbErrorMsg</span>
+                                    <button type="submit" class="btn mb-3" id="submitBtn">Next
+                                        <span><i class="fa fa-angle-double-right ml-1"></i></span></button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var dberror = true;
+    $(function () {
+        $("#invalidDb").hide();
+        $("#databaseName").focusout(function () {
+            dbNameCheck();
+
+        });
+        $("#databaseForm").submit(function () {
+            dbNameCheck();
+
+            return dberror;
+        });
+
+
+    });
+
+    function dbNameCheck() {
+        var regex = /^[A-Za-z_]{1,64}$/;
+        var reg = new RegExp(regex);
+        var databaseName = $("#databaseName").val();
+        if (reg.test(databaseName)) {
+            $("#databaseName").css("border-color", "#D8D8D8");
+            $("#invalidDb").hide();
+            dberror = true;
+        }
+        else {
+            $("#databaseName").css("border-color", "red");
+            $("#invalidDb").show();
+            dberror = false;
+        }
+
+    }
+  /*  function databaseCheckExist(){
+               $.ajax({
+                url: "/Home/databaseCheckExist",
+                type: "POST",
+                 data: {
+                    tableName: $("#databaseName").val()
+                },
+                success: function (data) {
+                  if(data==1){
+                        dberror=true;
+                      $("#invalidTaleExist").html("");
+                  }
+                  else if(data==0){
+                    $("#invalidDBExist").html("Database Name already Exit.");
+                        dberror=true;
+                    }
+                },
+                error: function (err) {
+                    console.error();
+                }
+            });
+
+        }*/
+</script>

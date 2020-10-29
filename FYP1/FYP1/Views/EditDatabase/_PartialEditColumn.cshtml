@@ -1,0 +1,224 @@
+﻿@model FYP1.Models.Column
+<style>
+    .backColor {
+        background-color: #00b297;
+    }
+
+    .inputWidth {
+        font-size: 13px;
+    }
+
+    .btns {
+        background-color: #00b297;
+        border-radius: 5px;
+        width: 120px;
+    }
+
+    .columnsDisplay {
+        margin-left: 130px;
+    }
+</style>
+<section class="columnsDisplay" id="disPlayColumns">
+    <h5>Edit Attribute</h5>
+    <form>
+        <span id="invalidEditColumnExist" style="color:red"></span>
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <input type="text" id="hiddenName" hidden value="@Model.name" readonly class="form-control inputWidth" />
+
+            </div>
+            <div class="col" id="firstChild">
+                <input type="text" class="form-control inputWidth" asp-for="name" id="fieldName" placeholder="Field name"><span id="invalidFieldName" style="color:red">*</span>
+            </div>
+
+            <div class="col mt-3">
+                <select class="form-control inputWidth" id="dataType">
+                    <option selected disabled>choose</option>
+                    <option value="int">Number</option>
+                    <option value="string">text</option>
+                    <option value="date">Date</option>
+                    <option value="boolean">True/false</option>
+                    <option value="email">Email</option>
+                    <option value="password">Password</option>
+                    <option value="file">File</option>
+                    <option value="url">Web Link</option>
+                    <option value="search">Search</option>
+                    <option value="date">Date</option>
+                    <option value="textarea">Text Area</option>
+                </select><span id="invalidDataType" hide style="color:red">*</span>
+            </div>
+
+
+            <div class="col mt-3">
+                <select class="form-control inputWidth" asp-for="required">
+                    <option selected disabled>Is Required</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+
+                </select><span id="invalidRequired" hide style="color:red">*</span>
+            </div>
+            <div class="col">
+                <input type="number" class="form-control inputWidth" asp-for="minLength" placeholder="Min Length" min="1"><span id="invalidMinLength" hide style="color:red">*</span>
+            </div>
+            <div class="col">
+                <input type="number" class="form-control inputWidth" asp-for="maxLength" placeholder="Max Length" min="1"><span id="invalidMaxLength" hide style="color:red">*</span>
+            </div>
+
+            <div class="col" id="lastChild">
+                <input type="button" onclick="editColumnTable()" class="btn btns backColor " value="Update">
+            </div>
+
+        </div>
+    </form>
+
+</section>
+
+<div id="editFormField" hidden >
+
+</div>
+
+<script>
+    function editColumn() {
+    console.log("editClo");
+        $.ajax({
+            url: "/EditDatabase/editColumn",
+            type: "POST",
+            data: {
+                columnName: $("#hiddenName").val(),
+                fieldName: $("#fieldName").val(),
+                dataType: $("#dataType").val(),
+                minlength: $("#minLength").val(),
+                maxLength: $("#maxLength").val(),
+                required: $("#required").val(),
+                fKey: $("#foreignKey").val(),
+            },
+            success: function (data) {
+                if(data.length>0){
+                    for (var i = 0; i < data.length; i++) {
+                        $("#editFormField").html(data[0]);
+                        var hidenId = $("#hiddenName").val();
+                        document.getElementById(hidenId).id = $("#fieldName").val();
+                        var colId = $("#fieldName").val();
+                        console.log(colId);
+                        document.getElementById(colId).placeholder = $("#fieldName").val();
+                        console.log(document.getElementById(colId));
+                        var dt = "number";
+                        if ($("#dataType").val() == "int") {
+
+                            document.getElementById(colId).type = dt;
+                        }
+                        else if ($("#dataType").val() == "string"){
+                            dt = "text";
+                            document.getElementById(colId).type = dt;
+                        }
+                   
+                        var labelId0 = "label" + hidenId;
+                        var labelId = "label" + colId;
+                        document.getElementById(labelId0).id = "label" + $("#fieldName").val();
+                        document.getElementById(labelId).innerHTML = $("#fieldName").val();
+                        /*  elem.parentNode.removeChild(elem);
+                          var elem1 = document.getElementsByTagName("label");
+                          for (var j = 0; j < elem1.length; j++) {
+                               if(elem1[j].innerText==($("#column"+n).html())){
+                                 elem1[j].parentNode.removeChild(elem[j]);*/
+                        // }
+                        // }
+                
+                        saveNewForm();
+                    }
+                  }
+                   else{
+                        getAllColumnsofTables();
+                   }
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+    function getAllColumnsofTables(){
+         $.ajax({
+                url: "/EditDatabase/getAllColumnsofTables",
+                type: "GET",
+           
+                success: function (data) {
+                    $("#mainContainer").html(data);
+                },
+                error: function (err) {
+                    console.error();
+                }
+            });
+     }
+    function saveNewForm() {
+    console.log("saveNewForm");
+        elms = $("#editFormField").html();
+        console.log(elms);
+        $.ajax({
+            url: "/EditDatabase/saveUpdateForm",
+            type: "POST",
+            data: {
+                formString: elms
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/columnValidation.js"></script>
+<script>
+    var fnameEror = 1;
+    var dataTError = 1;
+    var requiredError = 1;
+    var minLengthError = 1;
+    var maxLengthError = 1;
+    $(function () {
+
+        $("#invalidFieldName").hide();
+        $("#invalidDataType").hide();
+        $("#invalidRequired").hide();
+        $("#invalidMinLength").hide();
+        $("#invalidMaxLength").hide();
+
+        $("#fieldName").focusout(function () {
+            fnameEror = fieldNameCheck();
+        });
+        $("#dataType").focusout(function () {
+            dataTError = dataTypeCheck();
+        });
+        $("#required").focusout(function () {
+            requiredError = requiredCheck();
+        });
+        $("#minLength").focusout(function () {
+            minLengthError = minLengthCheck();
+        });
+        $("#maxLength").focusout(function () {
+            maxLengthError = maxLengthCheck();
+        });
+
+
+    });
+    function editColumnTable() {
+
+        dataTError = dataTypeCheck();
+        fnameEror = fieldNameCheck();
+        maxLengthError = maxLengthCheck();
+        minLengthError = minLengthCheck();
+        requiredError = requiredCheck();
+
+        if (fnameEror && dataTError && requiredError && minLengthError && maxLengthError) {
+
+            editColumn();
+
+        }
+    }
+
+</script>
+

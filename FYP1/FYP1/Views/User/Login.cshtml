@@ -1,0 +1,91 @@
+﻿@model FYP1.Models.loginUser
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_EmptyLayout";
+}
+
+
+    <link href="~/css/UserLogin.css" rel="stylesheet" />
+    <style>
+        
+.mainRow {
+    height:737px;
+
+    background-image: url('bgImg.jpg');
+    background-size:cover;
+    overflow-y:hidden;
+   
+}
+
+    </style>
+    <body >
+      
+        <div class="container-fluid p-5  mainRow"  >
+      @*      <h1>@ViewBag.result</h1>*@
+
+            <div class="row mt-4 p-4 ">
+                <div class="col-sm-5">
+                    <div class="row mt-4" style="color: #1D2939">
+                        <a class="logo" style="font-size:60px;">Web<span style="color:#00b297">Tiqs</span></a>
+                        <h1>Easy build Web Applications</h1>
+                        <h4>No Coding Required!</h4>
+                        <p>
+                            WebTiqs is designed to facilitate developers and non-technical people to 
+                            create management applications on their own. It generates automatic database 
+                            and automatic forms which can be used to manage database. There can be a 
+                            scenario where an owner of a small store for e.g. a medical store, a book
+                            store or a grocery store needs to shift manual data management to computerized 
+                            management system. So for this purpose they may have to hire a software engineer to 
+                            design such a system according to their requirements and this will cost them time and
+                            money. Hence, webtiqs intends to provide a service to such non-technical persons to design
+                            management systems by themselves at least cost.
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4 ml-3 bg-white pb-1" style="height:550px;">
+                    <form class="text-center p-4 mt-4 " asp-action="Login">
+                        <p class="h4 mb-4 bold">Log in</p>
+                        <span class="text-center text-danger">@ViewBag.loginAgain</span>
+
+                        <input type="text" id="defaultLoginFormEmail" asp-for="UserName" class="form-control mb-4" placeholder="User name">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <input type="password" asp-for="Password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <span class="text-danger">@ViewBag.ErrorMsg</span>
+                        @*<div class="d-flex justify-content-lg-start">
+                            <div>
+                                <div class="col-sm-4">
+                                    <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                                </div>
+                                <div class="col-sm-8"></div>
+                            </div>
+                        </div>*@
+                        <button class="btn border btn-block my-4" type="submit" id="loginBtn">Log in</button>
+                        <div>
+                            <a asp-action="ForgotPassword">Forgot password?</a>
+                        </div>
+                        <span>
+                            Don't have an account?
+                            <a asp-action="SignUp">Sign up</a>
+                        </span>
+                    </form>
+                    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" class="p-3">
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn  btn-block"
+                                        name="provider" id="googleBtn" value="@provider.Name"
+                                        title="Log in using your @provider.DisplayName account">
+                                    Continue with
+                                    @provider.DisplayName
+                                </button>
+                            }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+

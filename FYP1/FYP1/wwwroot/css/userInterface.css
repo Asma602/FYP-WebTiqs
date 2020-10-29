@@ -1,0 +1,45 @@
+﻿body {
+    overflow-y: scroll;
+    overflow-x:hidden;
+}
+
+
+.bgColor {
+    background-color: #00b297;
+}
+
+#sidebar {
+    width: 250px;
+}
+
+
+.modal-lg {
+    max-width: 90% !important;
+}
+
+.setTableNames {
+   
+    border-bottom: 1px solid #00b297;
+    width: 80%;
+    margin-left: 10px;
+    text-align: start;
+    text-align: center;
+    box-shadow: none;
+}
+
+.viewFormPanelStyle {
+    position: absolute;
+    top: 100px;
+    left: 350px;
+    
+}
+
+.modal-header{
+    padding:5px;
+}
+.labelSize{
+    font-size:16px;
+}
+.doneEditingLink{
+   
+}

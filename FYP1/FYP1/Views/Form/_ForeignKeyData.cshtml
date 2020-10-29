@@ -1,0 +1,14 @@
+﻿
+
+@model FYP1.ViewModel.ForeignKeyData
+
+<select class="form-control" id="@Model.tableName">
+    @if (Model.parentDataId.Count() > 0)
+    {
+        @foreach (var item in Model.parentDataId)
+        {
+            <option value="@item">@item</option>
+        }
+    }
+
+</select>

@@ -1,0 +1,150 @@
+﻿@model FYP1.ViewModel.tableRelation
+    
+    <link href="~/css/partialMakeRelation.css" rel="stylesheet" />
+
+<section class="columnsDisplay pt-4" id="disPlayColumns">
+    <h4 class="font-weight-bolder">Map Relations</h4>
+    <h6 class="font-weight-bolder">Choose tables to map relations</h6>
+
+    <div id="mapRelation">
+        <div class="form-row">
+            <div class="col" id="firstChild">
+                <select id="pKey" class="browser-default custom-select">
+
+                    <option disabled selected>Table-1</option>
+                    @foreach (var i in Model.tables)
+                    {
+                        <option value="@i.tableName">@i.tableName</option>
+                    }
+                </select><span id="invalidPkey" style="color:red">*</span>
+            </div>
+            <div class="col">
+                <select id="relation" class=" browser-default custom-select">
+                    <option disabled selected>Choose</option>
+                    <option value="one-to-many">One to many</option>
+                    <option value="one-to-one">One to one</option>
+                </select><span id="invalidRelation" style="color:red">*</span>
+            </div>
+            <div class="col" id="foreignKey1">
+                @{
+                    Html.RenderPartial("_PartialForeignKey", Model.tables);
+                }
+            </div>
+            <div class="col" id="lastChild1">
+                <button onclick="getForeignKey()" class="btn ">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="viewRelation">
+        @{
+            Html.RenderPartial("_partialRelation", Model);
+        }
+    </div>
+
+</section>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+        var pkError=true;
+        var fkError=true;
+        var relationError=true;
+         $(function() {
+            $("#invalidPkey").hide();
+            $("#invalidRelation").hide();
+            $("#invalidfKey").hide();
+            $("#pKey").focusout(function(){
+             pKeyCheck();
+             });
+            $("#fKey").focusout(function(){
+                 fKeyCheck();
+            });
+          $("#relation").focusout(function(){
+                 relationCheck();
+
+            });
+
+
+        });
+        function relationCheck(){
+          var relation1= $("#fKey").val();
+            if(relation1!=null){
+                 $("#relation").css("border-color","#D8D8D8");
+                 $("#invalidRelation").hide();
+                 relationError=true;
+            }
+            else{
+                 $("#relation").css("border-color","red");
+                 $("#invalidRelation").show();
+                 relationError=false;
+            }
+        }
+        function  fKeyCheck(){
+             var fKey1= $("#fKey").val();
+            if(fKey1!=null){
+                 $("#fKey").css("border-color","#D8D8D8");
+                 $("#invalidfKey").hide();
+                 fkError=true;
+            }
+            else{
+                 $("#fKey").css("border-color","red");
+                 $("#invalidfKey").show();
+                 fkError=false;
+            }
+        }
+        function  pKeyCheck(){
+            var pKey1= $("#pKey").val();
+            if(pKey1!=null){
+                 $("#pKey").css("border-color","#D8D8D8");
+                 $("#invalidPkey").hide();
+                 pKError=true;
+
+                $.ajax({
+                    url: "/EditDatabase/getForeignKeyList",
+                    type: "POST",
+                    data: {
+                        pKey: pKey1,
+                    },
+                    success: function (data) {
+
+                        $("#foreignKey1").html(data);
+                         $("#invalidfKey").hide();
+                    },
+                    error: function (err) {
+                        console.error();
+                    }
+                });
+
+
+            }
+            else{
+                 $("#pKey").css("border-color","red");
+                 $("#invalidPkey").show();
+                 pkError=false;
+            }
+        }
+</script>
+<script>
+    function getForeignKey() {
+        pKeyCheck();
+        fKeyCheck();
+        relationCheck();
+        if(pkError && fkError && relationError){
+           $.ajax({
+                url: "/EditDatabase/MakeRelation",
+                type: "POST",
+                data: {
+                    pKey: $("#pKey").val(),
+                    fKey:$("#fKey").val(),
+                    relation:$("#relation").val()
+                },
+                success: function (data) {
+                    $("#viewRelation").html(data);
+                },
+                error: function (err) {
+                    console.error();
+                }
+            });
+        }else{}
+    }
+
+</script>

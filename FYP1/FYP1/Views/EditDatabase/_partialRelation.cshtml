@@ -1,0 +1,27 @@
+﻿@model FYP1.ViewModel.tableRelation
+
+    <h5 style="color:red">@ViewBag.errorMessage</h5>
+<table class="table table-hover table-bordered table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Independent Table</th>
+            <th scope="col">Relation</th>
+            <th scope="col">Dependent Table</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.relation)
+        {
+            <tr>
+                <td>@item.pTableName</td>
+                <td>@item.relationType</td>
+                <td>@item.fTableName</td>
+            </tr>
+
+        }
+    </tbody>
+
+</table>
+
+

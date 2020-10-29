@@ -1,0 +1,36 @@
+﻿<link href="~/css/HomeCreateApp.css" rel="stylesheet" />
+
+<style>
+    .bgColor{
+        background-color:#00b297;
+    }
+    #submitBtn{
+        width:180px;
+    }
+</style>
+
+<button type="button" id="success" hidden class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    
+</button>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+        <div class="modal-content">
+            <div class="modal-header bgColor">
+                <h5 class="modal-title" id="exampleModalLongTitle">Database Created</h5>
+              
+            </div>
+            <div class="modal-body">
+                Your Database is Created Successfully and is Ready to Connect to Interface...
+            </div>
+            <div class="modal-footer">
+                <a  class="btn "  asp-controller="userInterface" asp-action="index" id="submitBtn" 
+                   style="text-transform:none">
+                Okay</a>
+            </div>
+        </div>
+    </div>
+</div>

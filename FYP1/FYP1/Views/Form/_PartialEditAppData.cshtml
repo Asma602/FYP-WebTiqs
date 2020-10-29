@@ -1,0 +1,24 @@
+﻿@model FYP1.ViewModel.EditAppRecord
+
+<style>
+    .submitBtn {
+        background-color: #00b297;
+        border-radius: 5px;
+    }
+</style>
+<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" />
+<hr />
+
+<div class="row">
+    <h1 id="editAppTableName" hidden>@Model.tableName</h1>
+    <h1 id="editAppDbName" hidden>@Model.dbName</h1>
+    <div class="col-md-4">
+        <form id="editFormRecord">
+           
+
+            <div class="form-group">
+                <button type="button" class="btn  btn-teal" onclick="updateAppRecord();">Update</button>
+            </div>
+        </form>
+    </div>
+</div>

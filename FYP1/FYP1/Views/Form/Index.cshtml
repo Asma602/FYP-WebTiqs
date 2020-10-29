@@ -1,0 +1,131 @@
+﻿@model FYP1.ViewModel.formsApplicationDatabase
+
+@{
+    ViewData["Title"] = Model.applicationDatabase.userApplications.appName;
+    Layout = "_EmptyLayout";
+
+}
+
+<style>
+    .UpdateButtonOfRecord{
+         width:90px;
+         height:40px;
+         color:white;
+         border:none;
+         border-radius:4px;
+         background-color:#00796B;
+    }
+    #bgImg {
+        background-image: url('../bg.jpg');
+    }
+
+    .transBg {
+        background-image: radial-gradient(circle,#00b297,#1D2939);
+    }
+
+    .styleFormTitle {
+        border-bottom: 1px solid #00b297;
+    }
+
+    .doneEditingLink {
+        background-color: transparent;
+        border-bottom: 1px solid #00b297;
+        color: black;
+        text-align: center;
+        float: right;
+    }
+</style>
+<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="container-fluid" id="bgImg">
+    <nav class="navbar navbar-top row sticky-top" >
+        <div class="col-sm-3">
+            <a class="navbar-brand" href="#">
+                @*<input type="file" name="name" value="" />*@
+                <img src="~/logo/@Model.applicationDatabase.userApplications.appLogo" height="40" alt=" logo">
+            </a>
+        </div>
+
+        <div class="col-sm-7">
+            <h2 class="text-capitalize text-dark font-weight-bold ml-5">@Model.applicationDatabase.userApplications.appName</h2>
+        </div>
+        <div class="col-sm-1 pull-right ml-5">
+                <a class="nav-link box-shadow btn-teal z-depth-1 mr-0 " style="width:50px;border-radius:5px;"
+                   asp-controller="user" asp-action="index">
+                    <span><i class="fa fa-sign-out mr-3"></i></span>
+                </a>
+        </div>
+    </nav>
+
+    <div class="row" >
+        <div class="col-sm-3 p-0 ">
+            <div id="sidebar" class="p-2" style="height:100vh;">
+
+                <!-- sidebar menu start-->
+                <h6 class="font-weight-bold text-white mt-5 ml-3"><i class="fa fa-tasks mr-2"></i>Manage Directory</h6>
+                <ul class="sidebar-menu mt-1" id="nav-accordion">
+                    @foreach (var item in Model.forms)
+                    {
+                        var idTable = "table" + item.formId;
+                        <input type="text" id="dbName" value=@Model.applicationDatabase.appDatabases.dbName readonly hidden>
+                        <input type="text" id="@idTable" value=@item.tableName readonly hidden>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="styleFormTitle">
+                                <i class="fa fa-table"></i>
+                                <span class="text-white ">@item.formTitle</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu" onclick="getFormView(this.id) " id=@item.formId>
+                                    <a class=" p-2 text-white" id="getFormTitle">Add Record</a>
+
+                                </li>
+                                <li class="sub-menu" onclick="getAllData(this.id)" id=@item.formId>
+                                    <a class=" p-2 text-white">View Record</a>
+
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6  mt-5 align-content-center" id="previewForm" style="background-color:ghostwhite">
+            <h3 id="formHeading" class="heading"></h3>
+            <div class="container " style="z-index:-1" >
+                @*<h5 id="showTableName"></h5>*@
+                <div id="formView" >
+
+                </div>
+                <div id="editFormRecord">
+                     
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+<div hidden id="fView">
+
+</div>
+<h1 id="heading" hidden>
+</h1>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" defer></script>
+
+<script src="~/js/userAppDashboard.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+

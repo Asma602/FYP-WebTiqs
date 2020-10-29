@@ -1,0 +1,57 @@
+﻿.formDiv {
+    background-color: var(--set-bg-color);
+    color: var(--set-text-color);
+    font-size: var(--set-font-size);
+    font-weight: var(--set-font-weight);
+    font-family: var(--set-font-family);
+    text-decoration: var(--set-text-decoration);
+    font-style: var(--set-font-style);
+    letter-spacing: var(--set-letter-spacing);
+    word-spacing: var(--set-word-spacing);
+    align-content: var(--set-text-position);
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y:scroll;
+}
+
+font {
+    --set-font-size: 16px;
+    --set-font-weight: normal;
+    --set-font-family: verdana;
+    --set-text-decoration: normal;
+    --set-font-style: none;
+    --set-letter-spacing: 0px;
+    --set-word-spacing: 0px;
+    --set-text-position: normal;
+}
+
+color {
+    --set-bg-color: #06c;
+    --set-text-color: #123;
+}
+
+button {
+    --set-button-color: #06c;
+    --set-button-szie: small;
+}
+
+
+.setBtn {
+    color: var(--set-button-color);
+    font-weight: var(--set-font-weight);
+    font-size: var(--set-font-size);
+    width: var(--set-button-size);
+}
+
+.styleButton {
+    /*background-color: white;*/
+    outline-color: #e7e7e7;
+    color: black;
+    border: 2px solid #e7e7e7;
+}
+
+    .styleButton:hover {
+        background-color: #e7e7e7;
+    }

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<FYP1.Models.appData>
+<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<style>
+    .btns {
+        background-color: #00b297;
+        border-radius: 5px;
+    }
+
+    .manageAnchors {
+        font-size:18px;
+    }
+</style>
+
+<table class="table table-bordered" id="tbl-appData">
+    <thead class="font-weight-bold">
+        <tr class="text-center">
+            @foreach (var item in Model)
+            {
+                foreach (var colHeads in item.attribute)
+                {
+                    <th>
+                        @colHeads.ToUpper()
+                    </th>
+                }
+                break;
+
+            }
+            <th >Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int count = 0; }
+        @foreach (var item in Model)
+        {
+            if (count == 0)
+            {
+                <h1 id="appDataDbName" hidden>@item.dbName</h1>
+                <h1 id="appDataTableName" hidden>@item.tableName</h1>
+                <input value="@item.tableName" hidden id="tableName" />
+                <button class="btn btns dropdown-toggle pull-right" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Export Data
+                </button>
+                <div class="dropdown-menu ">
+                    <a asp-action="ExportXml" asp-controller="form" asp-route-table=@item.tableName class="dropdown-item">Export XML</a>
+                    <a asp-action="ExportCsv" asp-controller="form" asp-route-table="@item.tableName" class="dropdown-item">Export CSV</a>
+                </div>
+                count++;
+            }
+            int flag = 0;
+            int id = 0;
+            <tr class="text-center">
+                @foreach (var i in item.cols)
+                {
+                    if (flag == 0)
+                    {
+                        id = int.Parse(i);
+                        <td>@i</td>
+                        flag++;
+                    }
+                    else
+                    {
+                        flag++;
+                        <td>@i </td>
+                    }
+                }
+                <td>
+                    <a onclick="editAppDataRecord(this.id)" class="manageAnchors" id="@id"><i class="fa fa-edit"></i></a>
+                    <a onclick="deleteAppDataRecord(this.id); " 
+                       class="manageAnchors ml-3" id="@id" >
+                        <i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

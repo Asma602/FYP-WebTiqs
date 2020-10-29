@@ -1,0 +1,23 @@
+﻿#googleBtn, #loginBtn {
+    border: 1px solid #dee2e6;
+    background-color: #00b297;
+    color: white;
+}
+
+    #loginBtn:hover {
+        background-image: radial-gradient(circle,#00b297,#1D2939);
+        transition: transform 2s;
+    }
+
+    #googleBtn:hover {
+        background-image: radial-gradient(circle,#00b297,#1D2939);
+    }
+
+#logo {
+    margin-top: 2px;
+}
+
+.mainRow {
+    background-image: url("bgImg.jpg");
+    background-repeat: no-repeat;
+}

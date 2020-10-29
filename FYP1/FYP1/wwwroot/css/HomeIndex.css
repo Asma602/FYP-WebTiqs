@@ -1,0 +1,79 @@
+﻿body {
+    overflow-y: scroll;
+}
+
+#logo {
+    margin-top: 2px;
+}
+
+#rightSlideBar {
+    width: 220px;
+    height: 790px;
+    background: #2a3542;
+    overflow-x: hidden;
+    float: right;
+}
+
+.backImg {
+    /*background-image: linear-gradient(to right,#eceff1,#bce6df);*/
+    background-image: url('bg.jpg');
+    margin-top: 90px;
+    position: absolute;
+}
+
+.horizontalLine {
+    background-image: linear-gradient(to right,#eceff1,#85929E);
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.rowBack {
+    background-image: linear-gradient(to right,#eceff1,#00b297);
+    margin-top: 58px;
+    padding: 20px;
+}
+
+.btn-round {
+    border-radius: 20px;
+    border: 1px solid black;
+    color: black;
+}
+
+.featuresClass {
+    font-size: 21px;
+}
+
+.featuresRow {
+    background-color: #eceff1;
+    text-align: center;
+}
+
+.separationline {
+    height: 10px;
+}
+
+.featuresHeading {
+    color: #00b297;
+    margin-left: 533px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.borderBottom {
+    border-bottom: 1px solid #eceff1;
+}
+
+.improveBussinessRow {
+    background-image: radial-gradient(circle,#00b297,#eceff1);
+}
+
+.fontClass {
+    font-size: 30px;
+}
+
+.headingColor {
+    color: #00b297;
+}
+
+.footerColor {
+    background-image: radial-gradient(circle,#eceff1,#00b297);
+}

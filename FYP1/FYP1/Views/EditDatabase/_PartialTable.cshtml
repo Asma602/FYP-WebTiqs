@@ -1,0 +1,92 @@
+﻿
+    <style>
+        .submitBtn {
+            background-color: #00b297;
+            border-radius: 5px;
+            width: 180px;
+        }
+    </style>
+<section class="contentMainBody">
+    <div id="contentBody">
+        <div class="container">
+            <div class="row ">
+                <div class="col-sm-6  ml-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="font-weight-bolder">Create Table </h5>
+                        </div>
+
+                        <div class="card-body">
+                            <span id="invalidTaleExist" style="color:red"></span>
+                            <input type="text" placeholder="Table Name" id="tName" class="form-control form-control-md">
+                            <span id="invalidTable" style="color:red">*Invalid Table Name</span>
+                            <a onclick="checkTable();" class="btn submitBtn nextToTables disabled" id="tableButton" style="color:white">Next >></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function() {
+            $("#invalidTable").hide();
+            $("#tName").focusout(function(){
+             tableNameCheck();
+             });
+        });
+     function tableNameCheck(){
+         var regex = /^[A-Za-z_]{1,64}$/;
+            var reg=new RegExp(regex);
+                var databaseName=$("#tName").val();
+                if(reg.test(databaseName)){
+                    $("#tName").css("border-color","#D8D8D8");
+                     $("#invalidTable").hide();
+                     $("#tableButton").removeClass("disabled");
+                     $("#tableButton").addClass("active");
+                     tableError=true;
+                }
+                else{
+                     $("#tName").css("border-color","red");
+                        $("#invalidTable").show();
+                        $("#tableButton").addClass("disabled");
+                     tableError=false;
+                  }
+
+    }
+    function checkTable(){
+    $.ajax({
+            url: "/EditDatabase/checkTableExist",
+            type: "POST",
+             data: {
+                tableName: $("#tName").val()
+            },
+            success: function (data) {
+              if(data==1){
+                addTName();
+                  $("#invalidTaleExist").html("");
+              }
+              else if(data==0)
+                $("#invalidTaleExist").html("Table Name already Exit.");
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+     function addTName(){
+        $.ajax({
+            url: "/EditDatabase/addTableName",
+            type: "POST",
+             data: {
+                tableName: $("#tName").val()
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>

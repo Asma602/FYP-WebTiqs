@@ -1,0 +1,284 @@
+﻿@model FYP1.Models.aspUser
+
+
+
+<link href="~/css/HomeIndex.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<body>
+
+    @section userNavItem
+        {
+        <li class="nav-item dropdown float-lg-right">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">@Model.UserName</a>
+            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" asp-controller="User" asp-action="ChangePassword">Change Password</a>
+              
+
+                <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+
+            </div>
+        </li>
+    }
+
+<div class="container-fluid backImg mt-0 p-0">
+    <div class="row rowBack ">
+        <div class="col-sm-5 mt-5 ">
+            <h1 class="ml-5">Build your Own Application</h1>
+            <hr class="horizontalLine" />
+            <p class="ml-5 text-justify">
+                WebTiqs is designed to facilitate developers and non-technical people to create 
+                management applications on their own. It generates automatic database and automatic 
+                forms which can be used to manage database. There can be a scenario where an owner of a
+                small store for e.g. a medical store, a book store or a grocery store needs to shift 
+                manual data management to computerized management system. So for this purpose they may 
+                have to hire a software engineer to design such a system according to their requirements
+                and this will cost them time and money. Hence, webtiqs intends to provide a service to 
+                such non-technical persons to design management systems by themselves at least cost.
+            </p>
+            <button class="ml-5 btn btn-round " style="text-transform:none" asp-controller="home" asp-action="createApplication" >Lets Get Started!</button>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+            <img src="~/mainPageImg.png" alt="Alternate Text" />
+        </div>
+    </div>
+    <div class="row ml-5">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3 ml-4 mt-5">
+            <div class="row">
+                <div class="col-sm-2">
+                    <i class="fa fa-laptop fa-2x  " aria-hidden="true"></i>
+                </div>
+                <div class="col-sm-10">
+                    <p class="font-weight-bold  ml-1 featuresClass">Application Builder</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 ml-4 mt-5">
+            <div class="row">
+                <div class="col-sm-2">
+                    <i class="fa fa-wrench fa-2x  " aria-hidden="true"></i>
+                </div>
+                <div class="col-sm-10">
+                    <p class="font-weight-bold  ml-1 featuresClass">Online Database</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 ml-4 mt-5">
+            <div class="row">
+                <div class="col-sm-2">
+                    <i class="fa fa-list-alt fa-2x  " aria-hidden="true"></i>
+                </div>
+                <div class="col-sm-10">
+                    <p class="font-weight-bold  ml-1 featuresClass">Website Builder</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row  mt-4 text-center p-4 pl-5">
+        <div class="row col-sm-12 p-2 borderBottom">
+            <h3 class="font-weight-bolder featuresHeading">Our Features</h3>
+        </div>
+        <div class="row mt-5" style="margin-left:65px;">
+            <div class="col-sm-3 ml-5 ">
+                <img src="~/ff4.jpg" alt="Alternate Text" />
+                <h4 class="font-weight-bolder mt-3 headingColor">Application Builder</h4>
+                <p>
+                    Create your management systems on your own without any coding skills.
+                    Use WebTiqs to create and manage applications online. We hope you will 
+                    enjoy using our platform.
+                </p>
+            </div>
+            <div class="col-sm-3 ml-5">
+                <img src="~/ff2.jpg" alt="Alternate Text" />
+                <h4 class="font-weight-bolder mt-3 headingColor">Online Database</h4>
+                <p>
+                    Create your own Databases connected with interfaces automatically using
+                    WebTiqs. Don't have database knowledge? No Worries! we are here to provide
+                    you the facility of creating databases and storing your data online 
+                    without any coding skills.
+                </p>
+            </div>
+            <div class="col-sm-3 ml-5">
+                <img src="~/f3.jpg" alt="Alternate Text" />
+                <h4 class="font-weight-bolder mt-3 headingColor">Management System</h4>
+                <p>
+                    Own a small store and don't have enough money to hire a developer to 
+                    provide you with a management system? Well, Do it yourself! 
+                    Create your own management system.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <hr />
+
+    <div class="row improveBussinessRow text-center mt-5 p-5">
+        <div class="col-sm-12">
+            <h2 class="font-weight-bolder text-white">Improve Your Business Today!</h2>
+            <h4 class="mt-4 font-weight-bolder">Build websites without coding...</h4>
+            <button class="btn btn-round mt-5 font-weight-bold">Lets Start!</button>
+        </div>
+    </div>
+
+    <div class="row text-center mt-5 " id="ContactSection">
+        <div class="col-sm-12 ml-0">
+            <h3 class="font-weight-bolder headingColor">Any Questions? Please feel free to Contact!</h3>
+            <hr />
+            <div class="mt-5">
+                <div class="row ">
+                    <div class="col-5 col-md-5 col-lg-5 pb-5 ml-5 p-3">
+                        <form asp-action="SendEmailToWebTiqs" asp-controller="Query">
+                            <div class="card contactBorder rounded-0">
+                                <div class="card-header p-0 ">
+                                    <div class="cardBg text-white text-center py-2">
+                                        <h3><i class="fa fa-envelope"></i> Contact Us</h3>
+                                        <p class="m-0">We would love to hear from you!</p>
+                                    </div>
+                                </div>
+                                <div class="card-body p-3">
+
+                                    <!--Body-->
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-user text-web-color"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="ContactUserName" name="ContactUserName" placeholder="Enter your name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-envelope text-web-color"></i></div>
+                                            </div>
+                                            <input type="email" class="form-control" id="ContactUserEmail" name="ContactUserEmail" placeholder="example@gmail.com" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-key text-web-color"></i></div>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="Password" id="ContactUserPassword" name="ContactUserPassword"
+                                                   required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-comment text-web-color"></i></div>
+                                            </div>
+                                            <textarea class="form-control" placeholder="Your Message" id="ContactUserMessage" name="ContactUserMessage"
+                                                      required></textarea>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger">@ViewBag.errorMsg</span>
+
+                                    <div class="text-center">
+                                        <input type="submit" value="Submit" class="btn-web rounded-1 py-2"
+                                               data-dismiss="modal" aria-label="Close">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6 col-md-7 col-lg-6 pb-5 p-3 w-100 maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d425289.3917346459!2d72.80591178119104!3d33.61637228195816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbfd07891722f%3A0x6059515c3bdb02b6!2sIslamabad%2C%20Islamabad%20Capital%20Territory%2C%20Pakistan!5e0!3m2!1sen!2s!4v1590857155689!5m2!1sen!2s" allowfullscreen="" frameborder="0"></iframe>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" id="AboutSection">
+        <div class="row">
+
+            <div class="col-sm-12 text-center">
+                <h3 class=" font-weight-bolder text-center headingColor">About us</h3>
+                <p>
+                    The team of WebTiqs welcomes you here! We have tried our best to provide you 
+                    the facility to create online management systems automatically without any coding
+                    skills. We hope that you will enjoy using this platform.
+                    Here is an overview of all the contributors who designed and developed this
+                    amazing tool for making life easier.
+                </p>
+            </div>
+
+        </div>
+        <div style="margin-left:50px;">
+            <div class="row p-3 ml-5">
+                <div class="col-sm-3 mt-3 float-right">
+                    <img src="~/images/FemaleDummy.png" alt="" height="200" width="200">
+                </div>
+                <div class="col-sm-8 mt-5">
+                    <h3>Asma Liaquat</h3>
+                    <div style="width: 100px; height: 2px;" class="bgColor mt-2"></div>
+
+                    <p class="mt-2">UET-16F-BSCS-KICSIT-01</p>
+                    <p style="text-align: justify;">
+                        Working as the developer of WebTiqs has been an amazing journey of one year. I learnt alot
+                        about new technologies and tools, had a greate experience working with ASP.NET Core. I hope you will enjoy
+                        using this portal for your management systems development, effortlessly.
+                    </p>
+                </div>
+                <hr />
+            </div>
+            <div class="row p-3 ml-5">
+
+                <div class="col-sm-8 mt-5 ">
+                    <h3>Muhammad Imran</h3>
+                    <div style="width: 100px; height: 2px;" class="bgColor mt-2"></div>
+
+                    <p class="mt-2">UET-16F-BSCS-KICSIT-07</p>
+                    <p style="text-align: justify;">
+                        Working as the developer of WebTiqs has been an amazing journey of one year. I learnt alot
+                        about new technologies and tools, had a greate experience working with ASP.NET Core. I hope you will enjoy
+                        using this portal for your management systems development, effortlessly.
+                    </p>
+                </div>
+                <div class="col-sm-3 mt-3">
+                    <img src="~/images/imranDummy.png" alt="" height="200" width="200">
+                </div>
+            </div>
+            <div class="row p-3 ml-5">
+                <div class="col-sm-3 mt-3">
+                    <img src="~/images/FemaleDummy.png" alt="" height="200" width="200">
+                </div>
+                <div class="col-sm-8 mt-5 ">
+                    <h3>Iqra Mehmood</h3>
+                    <div style="width: 100px; height: 2px;" class="bgColor mt-2"></div>
+
+                    <p class="mt-2">UET-16F-BSCS-KICSIT-12</p>
+                    <p style="text-align: justify;">
+                        Working as the developer of WebTiqs has been an amazing journey of one year. I learnt alot
+                        about new technologies and tools, had a greate experience working with ASP.NET Core. I hope you will enjoy
+                        using this portal for your management systems development effortlessly.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="page-footer font-small text-dark mt-5 ">
+       
+        <div class="footer-copyright text-center text-dark footerColor py-3 mt-3">
+            © 2020 Copyright:
+            <a href="#" class="text-dark font-weight-bolder"> WebTiqs.com</a>
+            <p>@ViewBag.user</p>
+        </div>
+    </footer>
+</div>
+
+
+</body>
+
+

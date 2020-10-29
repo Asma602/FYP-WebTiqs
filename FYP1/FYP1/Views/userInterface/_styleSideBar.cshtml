@@ -1,0 +1,169 @@
+﻿
+    <style>
+        p,a,span{
+            font-size:14px;
+        }
+       .changeModalLabelBold{
+           font-weight:bold;
+       }
+        .changeModalLabelBolder {
+            font-weight: bolder;
+        }
+
+        .styleAnchor {
+            border: 1px solid;
+            padding: 10px;
+            width: 100%;
+        }
+       
+    </style>
+
+<!-- styling -->
+<h4>Style here</h4>
+<div >
+    <div class="row table-bordered">
+        <div class="col-sm-6" style="padding: 20px;">
+            <!-- font family -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Font Family</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select name="" id="setFontFamily" class="form-control" oninput="setFontFamily()">
+                        <option value="verdana" style="font-family: verdana;">Verdana</option>
+                        <option value="Arial black" style="font-family: Arial-black;">Arial Black</option>
+                        <option value="Times New Roman" style="font-family: Times New Roman;">Time New Roman</option>
+                        <option value="Comic Sans" style="font-family: Comic Sans;">Comic Sans</option>
+                        <option value="Sans serif" style="font-family: sans-serif;">Sans serif</option>
+                        <option value="Tahoma" style="font-family: tahoma;">Tahoma</option>
+                    </select>
+                </div>
+            </div>
+            <!-- font size -->
+            <div class="row mt-2">
+                <div class="col-sm-12">
+                    <p>Font Size <span class="col-sm-6" id="getFontSize">16</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="range" min="8" max="24" step="1" class="custom-range col-sm-12 " id="setFontSize" oninput="setFontSize()">
+                </div>
+            </div>
+            <!-- letter spacing -->
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <p>Letter Spacing    <span class="col-sm-2" id="getLetterSp">0</span> </p>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="range" min="-5" max="6" step="0.2" class="custom-range col-sm-12" id="setLetterSp" oninput="setLetterSpacing()">
+                </div>
+            </div>
+            <!-- Word spacing -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Word Spacing <span id="getWordSp" class="col-sm-2">0</span> </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="range" min="-5" max="6" step="0.2" class="custom-range  col-sm-12" id="setWordSp"
+                           oninput="setWordSpacing()">
+
+                </div>
+            </div>
+            <!-- font weight -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Font Weight</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select name="" id="setFontWeight" class="form-control" style="width: 100%;" oninput="setFontWeight();">
+                        <option value="normal">Normal</option>
+                        <option value="bold" style="font-weight: bold;">Bold</option>
+                        <option value="bolder" style="font-weight: bolder;">Bolder</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Font style -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Font Style</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select name="" id="setFontStyle" class="form-control" style="width: 100%;" oninput="setFontStyle()">
+                        <option value="normal">Normal</option>
+                        <option value="Italic">Italic</option>
+                        <option value="Oblique">Oblique</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-4" style="padding: 20px">
+            <!-- Background color -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Set Background Color</p>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-sm-12">
+                    <a id="setBgColor" class="text-dark styleAnchor border-light">Pick Color <i class="fa fa-angle-down ml-3"></i></a>
+
+                </div>
+            </div>
+
+            <!-- Text color -->
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <p>Set Text Color</p>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-sm-12">
+                    <a id="setTextColor" class="text-dark styleAnchor border-light">Pick Color <i class="fa fa-angle-down ml-3"></i></a>
+                </div>
+            </div>
+
+            <!-- Btn color -->
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <p>Set Button Background</p>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-sm-12">
+                    <a id="setBtnColor" class="text-dark styleAnchor border-light">Pick Color <i class="fa fa-angle-down ml-3"></i></a>
+                </div>
+            </div>
+
+            <!-- Btn Text color -->
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <p>Set Button Text</p>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-sm-12">
+                    <a id="setBtnTextColor" class="text-dark styleAnchor border-light">Pick Color <i class="fa fa-angle-down ml-3"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/ColorPicker.js"></script>
+<script src="~/js/themeEditor.js"></script>
+
+

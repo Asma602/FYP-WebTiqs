@@ -1,0 +1,19 @@
+﻿
+#mapRelation {
+    background-color: white;
+    margin-bottom: 3px;
+}
+
+.columnsDisplay {
+    margin-left: 150px;
+}
+
+.btn {
+    background-color: #00b297;
+    width: 80%;
+    margin-top: 0px;
+    padding: 10px;
+}
+#lastChild1 {
+    position: relative;
+}

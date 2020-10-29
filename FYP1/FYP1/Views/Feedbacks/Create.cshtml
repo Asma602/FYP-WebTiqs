@@ -1,0 +1,74 @@
+﻿@model FYP1.Models.Feedback
+
+@{
+    ViewData["Title"] = "Feedback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/BgImg.css" rel="stylesheet" />
+<style>
+    .btn {
+        background-color: #00b297;
+    }
+     body{
+         overflow-y:hidden;
+     }
+</style>
+
+
+@section userNavItem{
+    <li class="nav-item dropdown float-lg-right">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">@Context.Session.GetString("userName")</a>
+        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Change Password</a>
+            <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+        </div>
+    </li>
+
+}
+
+
+<h4>Feedback</h4>
+<div class="container-fluid setBgImg">
+    <div class="row mt-2 ">
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-5 mt-5 ">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h5 class="font-weight-bolder ">Please leave a comment</h5>
+                </div>
+               
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="userName" class="control-label">Enter your Name</label>
+                                <input asp-for="userName" class="form-control" />
+                                <span asp-validation-for="userName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="comments" class="control-label">Please leave a comment</label>
+                                <textarea asp-for="comments" rows="6" class="form-control"></textarea>
+                                <span asp-validation-for="comments" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label asp-for="Id" class="control-label"></label>
+                                <input asp-for="Id" class="form-control" value=@ViewBag.userId />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn" />
+                            </div>
+                        </form>
+                    </div>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+    
+
+

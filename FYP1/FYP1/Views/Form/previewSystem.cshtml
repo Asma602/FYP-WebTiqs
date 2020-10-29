@@ -1,0 +1,101 @@
+﻿@model FYP1.ViewModel.formsApplicationDatabase
+
+@{
+    ViewData["Title"] = "Delete Forms";
+    Layout = "_EmptyLayout";
+
+}
+<link href="~/css/partialSideBar.css" rel="stylesheet" />
+<style>
+    body{
+        overflow-y:scroll;
+    }
+</style>
+<div class="container-fluid">
+    <nav class="navbar navbar-dark sticky-top row" style="background-color:white">
+        <div class="col-sm-3">
+            <a class="navbar-brand" href="#">
+                <img src="~/logo/@Model.applicationDatabase.userApplications.appLogo" height="40" alt=" logo">
+            </a>
+        </div>
+
+        <div class="col-sm-5">
+            <h2 class="text-capitalize ml-5 font-weight-bold text-dark">@Model.applicationDatabase.userApplications.appName</h2>
+        </div>
+        <div class="col-sm-2 ml-5 pull-right">
+            <a asp-action="index" asp-controller="user" class="btn changesBtn p-2 btn-teal">Save Changes</a>
+        </div>
+        <div class="col-sm-1 ">
+            <li class="nav-item p-0 " style="list-style: none">
+                <a class="btn logoutBtn btn-teal p-2" asp-controller="User" asp-action="Logout"><i class="fa fa-sign-out"></i></a>
+            </li>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-sm-3 p-0">
+            <div id="sidebar" class=" p-2">
+
+                <!-- sidebar menu start-->
+                <h6 class="font-weight-bold text-white mt-5 ml-2"> <i class="fa fa-tasks mr-2"></i>View or Delete Forms</h6>
+                <ul class="sidebar-menu mt-1" id="nav-accordion">
+                    @foreach (var item in Model.forms)
+                    {
+                        <li class="sub-menu" onclick="getFormView(this.id) " id=@item.formId style="border-bottom:#ffd800">
+                            <a class=" p-2 text-white" style="font-size:17px;"  id="getFormTitle">@item.formTitle</a>
+                        </li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6  mt-5 align-content-center" id="previewForm">
+            <h3 id="formHeading" class="heading"></h3>
+            <div id="formView">
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+    //owl carousel
+
+    function getFormView(idArg) {
+        var tableName = $("#table" + idArg).val();
+        $.ajax({
+            url: '/Form/getView',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                getFormId: idArg,
+                tableName: tableName
+            },
+            success: function (data) {
+                $("#formView").html(data[0]),
+                    $("#formHeading").html(data[1]);
+                $("#tabName").html(data[2]);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

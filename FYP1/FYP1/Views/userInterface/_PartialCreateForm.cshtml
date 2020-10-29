@@ -1,0 +1,92 @@
+﻿
+@model IEnumerable<FYP1.Models.Column>
+
+
+    @*<link href="~/css/partialCreateForm.css" rel="stylesheet" />*@
+
+<section class=" mt-4">
+
+    <div class="row mt-4">
+        
+        <div class="col-sm-7">
+            <input type="text" id="SetFormTitle" placeholder="Write form title here (e.g Add User)" class="form-control col-sm-12" />
+            <br />
+            <div id="formError " class="alert-danger"></div>
+            @foreach (var item in Model)
+            {
+                <div class="attrsContainer">
+                    <label class="container ml-1 ">
+
+                        <input type="checkbox" dataType=@item.dataType req=@item.required 
+                               minlen="@item.minLength" maxlen="@item.maxLength"
+                               desc=@item.name id=@item.name > 
+                        <span style="font-size:18px;">@item.name</span>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+
+                    }
+                    <br />
+                    <div id="invalidFormName" class="text-danger" style="font-size:16px;"></div>
+                    <button onclick="checkDuplicateForm();" style="text-transform:none;font-size:16px;"
+                            id="createBtn" data-toggle="modal" data-target="#myModal" class="btn bgColor">Create Form</button>
+
+                </div>
+
+            </div>
+
+   
+
+
+</section>
+<script>
+//    function checkDuplicateForm() {
+//    console.log($("#saveDbName").val());
+//    var formname = $("#SetFormTitle").val();
+   
+//    $.ajax({
+//        url: "/Form/checkDuplicateName",
+//        type: "GET",
+//        data: {
+//            fname: formname,
+//            database: $("#saveDbName").val()
+//        },
+        
+//        success: function (data) {
+           
+//            if (data == 1) {
+//                console.log($("#saveDbName").val());
+//                $("#myform").html("Form already Exists! Choose a different name");
+//            }
+//            else {
+              
+//                getForm();
+//            }
+//        }
+//    });
+//}//    function checkDuplicateForm() {
+//    console.log($("#saveDbName").val());
+//    var formname = $("#SetFormTitle").val();
+   
+//    $.ajax({
+//        url: "/Form/checkDuplicateName",
+//        type: "GET",
+//        data: {
+//            fname: formname,
+//            database: $("#saveDbName").val()
+//        },
+        
+//        success: function (data) {
+           
+//            if (data == 1) {
+//                console.log($("#saveDbName").val());
+//                $("#myform").html("Form already Exists! Choose a different name");
+//            }
+//            else {
+              
+//                getForm();
+//            }
+//        }
+//    });
+//}
+</script>

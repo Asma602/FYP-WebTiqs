@@ -1,0 +1,71 @@
+﻿@model IEnumerable<FYP1.Models.Tables>
+
+
+<link href="~/css/HomeIndex.css" rel="stylesheet" />
+<link href="~/css/HomeCreateApp.css" rel="stylesheet" />
+<link href="~/css/BgImg.css" rel="stylesheet" />
+<link href="~/css/partialSideBar.css" rel="stylesheet" />
+
+@section userNavItem{
+    <li class="nav-item dropdown float-lg-right">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">@Context.Session.GetString("userName")</a>
+        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Change Password</a>
+            <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+        </div>
+    </li>
+}
+<aside>
+    <div id="slideBarPTabless" >
+        @{
+            Html.RenderPartial("_slideBarPartialTables", Model);
+        }
+    </div>
+
+</aside>
+<div id="mainContainer"  class="setBgImg" style="height:737px;">
+
+</div>
+
+
+<script>
+    function createTable() {
+        $.ajax({
+            url: "/Home/partialTable",
+            type: "GET",
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+
+
+
+    function addColumn() {
+        $.ajax({
+            url: "/Home/addColumns",
+            type: "POST",
+            data: {
+                fieldName: $("#fieldName").val(),
+                dataType: $("#dataType").val(),
+                required: $("#required").val(),
+                required: $("#minLength").val(),
+                required: $("#maxLength").val(),
+                required: $("#fKey").val(),
+            },
+            success: function (data) {
+                $("#disPlayColumns").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+
+</script>
+
+

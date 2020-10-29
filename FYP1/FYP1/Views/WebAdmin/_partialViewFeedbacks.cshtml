@@ -1,0 +1,115 @@
+﻿@model IEnumerable<FYP1.Models.Query>
+
+
+<style>
+    .replyBtn {
+        background-color: #00b297;
+        box-shadow: none;
+        color: white;
+        border: none;
+        width:100px;
+
+    }
+</style>
+
+    <table class="table table-bordered " id="viewDataTable">
+        <thead>
+            <tr class="text-center">
+                <th>User Name</th>
+                <th>Email Address</th>
+                <th>Comments</th>
+                <th>Respond</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr class="text-center">
+                        <td>@item.queryUserName</td>
+                        <td>@item.queryUserEmail</td>
+                        <td>@item.userMessage</td>
+                        <td>
+                            <button data-toggle="modal" data-target="#exampleModalCenter" class="btn replyBtn"
+                                    onclick="setCredentials('@item.queryUserName','@item.queryUserEmail');">
+                                Reply
+                            </button>
+                    </tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center cardBg justify-content-center" style="background-color:#00b297;">
+                       <div class=" text-white text-center py-2">
+                            <h3><i class="fa fa-envelope"></i> Reply From WebTiqs</h3>
+                       </div>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="ReplyEmail" asp-controller="Query" method="post">
+                            <div class="rounded-0">
+                                <div class=" p-3">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-user text-web-color"> From :</i></div>
+                                            </div>
+                                            <input type="text" class="form-control" value="WebTiqs" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-user text-web-color"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="ContactUserName" name="ContactUserName" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-envelope text-web-color"> To :</i></div>
+                                            </div>
+                                            <input type="email" readonly class="form-control" id="ContactUserEmail" name="ContactUserEmail"
+                                                   required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-comment text-web-color"></i></div>
+                                            </div>
+                                            <textarea class="form-control" placeholder="Reply Message" id="ReplyMsg" name="ReplyMsg"
+                                                      required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <input type="submit" value="Send" class="btn-web rounded-1 py-2">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+
+<script>
+        function setCredentials(userName, userEmail)
+        {
+            $("#ContactUserName").val(userName);
+            $("#ContactUserEmail").val(userEmail);
+        }
+</script>

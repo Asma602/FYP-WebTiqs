@@ -1,0 +1,14 @@
+﻿@model IEnumerable<FYP1.Models.Form>
+@foreach (var item in Model)
+{
+    <li class="sub-menu">
+        <i class="fa fa-table text-white"></i>
+        <button type="button" id=@item.formId onclick="getApplicationForm(this.id);" 
+                value="@item.tableName" class="btn text-white setTableNames pl-0 text-left text-capitalize small text" 
+                tabindex="-1" role="dialog"
+                >
+            @item.formTitle
+        </button>
+
+    </li>
+}

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<FYP1.Models.Tables>
+<select id="fKey" class=" browser-default custom-select">
+    <option disabled selected>Table-2</option>
+
+    @foreach (var i in Model)
+    {
+        <option value="@i.id">@i.tableName</option>
+    }
+</select><span id="invalidfKey" style="color:red">*</span>

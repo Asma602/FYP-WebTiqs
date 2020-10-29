@@ -1,0 +1,14 @@
+﻿@model FYP1.ViewModel.tableRelation
+
+
+    @foreach (var item in Model.relation)
+    {
+    <tr>
+        <td>@item.pTableName</td>
+        <td>@item.relationType</td>
+        <td>@item.fTableName</td>
+    </tr>
+
+    }
+
+

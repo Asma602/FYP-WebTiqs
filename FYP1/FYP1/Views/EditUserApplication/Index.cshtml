@@ -1,0 +1,198 @@
+﻿@model FYP1.ViewModel.FormsTables
+@{
+    ViewData["Title"] = "Form Generation";
+    Layout = "_EmptyLayout";
+}
+
+<link href="~/css/StyleSideBar.css" rel="stylesheet" />
+<link href="~/css/userInterface.css" rel="stylesheet" />
+
+<style>
+    .doneEditingLink{
+         background-color:transparent;
+        border-bottom:1px solid #00b297;
+        color:black;
+        text-align:center;
+        float:right;
+    }
+    .appearAllForm{
+      position:absolute;
+      right:0px;
+    }
+    /*.btn {
+        
+    }*/
+    .changesBtn{
+        background-color: #00b297;
+        width: 90%;
+        margin-left: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .logoutBtn {
+        background-color: #00b297;
+        width: 60px;
+        font-size: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .editApplicationFormButton {
+        float:right;
+        position:relative;
+        top:-32px;
+        color:red;
+        visibility:hidden;
+        border:none;
+        background-color:transparent;
+    }
+
+</style>
+
+<div class="row">
+    <nav class="navbar col-sm-12">
+        <div class="col-sm-1">
+            <a class="navbar-brand" href="#">
+                <img src="~/logo/@ViewBag.appLogo" height="40" alt=" logo">
+            </a>
+        </div>
+
+        <div class="col-sm-7 ">
+            <h2 class="text-capitalize text-dark font-weight-bold " style="text-align:center">@ViewBag.appName</h2>
+        </div>
+        <div class="col-sm-2 ml-5">
+            <a asp-action="index" asp-controller="user" class="btn changesBtn" >Save Changes</a>
+        </div>
+        <div class="col-sm-1 ">
+            <li class="nav-item p-0 " style="list-style: none">
+                @*<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">@Context.Session.GetString("userName")</a>
+                <div class="dropdown-menu dropdown-primary float-left" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item " asp-controller="User" asp-action="ChangePassword">Change Password</a>*@
+                    <a class="btn logoutBtn p-2" asp-controller="User" asp-action="Logout"><i class="fa fa-sign-out"></i></a>
+
+                @**</div>*@
+            </li>
+        </div>
+    </nav>
+
+</div>
+
+<div id="sidebar" class="nav-collapse col-sm-3">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu mt-2" id="nav-accordion">
+        <li>
+            <a class="active" href="#">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <i class="fa fa-dashboard"></i>
+                    </div>
+                    <div class="col-sm-10">
+                        <h6>@ViewBag.dbName</h6>
+                    </div>
+                </div>
+                <input type="text" hidden name="name" value=@ViewBag.dbName id="saveDbName" />
+            </a>
+        </li>
+        @foreach (var item in Model.tables)
+        {
+            <li class="sub-menu">
+                <i class="fa fa-table text-white"></i>
+                <button type="button" id=@item.tableName  onclick="getTableAttrs(@item.tableName,@item.id);" 
+                        value="@item.tableName" class="btn text-white setTableNames text-capitalize small pl-0 text-left" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                    @item.tableName
+                </button>
+
+            </li>
+        }
+
+    </ul>
+</div>
+
+<div class="container align-content-center" style="position:absolute;top:100px;left:300px;">
+
+    <div class="row">
+
+        <div class="col-sm-8">
+            <h3 id="titleOfForm"></h3>
+            <button class="editApplicationFormButton" id="deleteApplicationForm" onclick="deleteApplicationForm(this.id)"><i class="fa fa-trash-o fa-lg"></i></button> 
+            <div id="getFormAttrs">
+                <h3>Choose Attributes</h3>
+
+            </div>
+            <br />
+        </div>
+    </div>
+
+</div>
+<div class="container ">
+    <div class="row">
+        <div id="myModal" class="modal fade col-sm-12" role="dialog">
+            <div class="modal-dialog row modal-lg">
+                <div class="modal-content col-sm-12">
+                    <div class="modal-header row bgColor" style="padding:5px;">
+                        <h5 class="modal-title  col-sm-6">Customize Form</h5>
+
+                        <button type="button" class="close col-sm-1 m-0 text-white" data-dismiss="modal" onclick="applyStyles()">&times;</button>
+                    </div>
+                    <div class="mt-1 row ">
+                        <div class="col-sm-5 " style="border-left-color:burlywood">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <h4 class="title labelSize ml-2 mt-2 font-weight-bolder" id="formTitle"></h4>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button onclick="styleForm();" id="editBtn" title="style form" style="border:none;background-color:transparent">
+                                        <i class="fa fa-edit btn-outline-black p-2" style="font-size:18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="myform" class="p-2 setFontTo16">
+                                @* Form appears here *@
+                            </div>
+                            @*<div id="saveBtn">
+
+                            </div>*@
+                        </div>
+                        <div class="col-sm-7" id="styleDiv">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer row p-1">
+                        <button type="button" class="btn bgColor" data-dismiss="modal" onclick="addFormToList();">Save Form</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="sidebar" class="nav-collapse col-sm-3 appearAllForm">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu mt-2" id="nav-accordion">
+        <li>
+            <a class="active" href="#">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <i class="fa fa-dashboard"></i>
+                    </div>
+                    <div class="col-sm-10">
+                        <h6>Existing Forms</h6>
+                    </div>
+                </div>
+                <input type="text" hidden name="name" value=@ViewBag.dbName id="saveDbName" />
+            </a>
+        </li>
+        <div id="formsHere">
+            @{
+                Html.RenderPartial("_form", Model.forms);
+            }
+        </div>
+       
+    </ul>
+</div>
+<script src="~/js/editUserApplication.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+

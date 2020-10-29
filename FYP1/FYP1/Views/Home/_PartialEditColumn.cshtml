@@ -1,0 +1,174 @@
+﻿@model FYP1.Models.Column
+    <style>
+        .backColor {
+            background-color: #00b297;
+        }
+
+        .inputWidth {
+            font-size: 13px;
+        }
+
+        .btns {
+            background-color: #00b297;
+            border-radius: 5px;
+            width: 120px;
+        }
+
+        .columnsDisplay {
+            margin-left: 130px;
+        }
+    </style>
+    <section class="columnsDisplay " id="disPlayColumns">
+        <h5>Edit Attribute</h5>
+        <form>
+            <span id="invalidEditColumnExist" style="color:red"></span>
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <input asp-for="id" hidden class="form-control" />
+
+                </div>
+                <div class="col" id="firstChild">
+                    <input type="text" class="form-control inputWidth"  asp-for="name" id="fieldName" placeholder="Attribute name"><span id="invalidFieldName" style="color:red">*</span>
+                </div>
+
+                <div class="col mt-3">
+                    <select class="form-control inputWidth" id="dataType">
+                        <option selected disabled>choose</option>
+                        <option value="int">Number</option>
+                        <option value="string">text</option>
+                        <option value="date">Date</option>
+                        <option value="boolean">True/False</option>
+                        <option value="email">Email</option>
+                        <option value="password">Password</option>
+                        <option value="file">File</option>
+                        <option value="url">Web Link</option>
+                        <option value="search">Search</option>
+                        <option value="date">Date</option>
+                        <option value="textarea">Text Area</option>
+                    </select><span id="invalidDataType" hide style="color:red">*</span>
+                </div>
+
+
+                <div class="col mt-3">
+                    <select class="form-control inputWidth" asp-for="required">
+                        <option selected disabled>Is Required</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+
+                    </select><span id="invalidRequired" hide style="color:red">*</span>
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control inputWidth" asp-for="minLength" placeholder="Min Length" min="1"><span id="invalidMinLength" hide style="color:red">*</span>
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control inputWidth" asp-for="maxLength" placeholder="Max Length" min="1"><span id="invalidMaxLength" hide style="color:red">*</span>
+                </div>
+
+                <div class="col" id="lastChild">
+                    <input type="button" onclick="editColumnTable()" class="btn backColor btns" value="Update">
+                </div>
+
+            </div>
+        </form>
+
+    </section>
+
+
+
+<script>
+ function editColumn(){
+         $.ajax({
+            url: "/Home/editColumn",
+            type: "POST",
+             data: {
+                id:$("#id").val(),
+                fieldName:$("#fieldName").val(),
+                dataType:$("#dataType").val(),
+                minlength:$("#minLength").val(),
+                maxLength:$("#maxLength").val(),
+                required:$("#required").val(),
+                fKey:$("#foreignKey").val(),
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/columnValidation.js"></script>
+<script>
+      var  fnameEror=1;
+        var  dataTError=1;
+        var  requiredError=1;
+        var  minLengthError=1;
+        var  maxLengthError=1;
+  $(function() {
+      
+            $("#invalidFieldName").hide();
+              $("#invalidDataType").hide();
+              $("#invalidRequired").hide();
+              $("#invalidMinLength").hide();
+              $("#invalidMaxLength").hide();
+
+            $("#fieldName").focusout(function(){
+                 fnameEror=fieldNameCheck();
+             });
+            $("#dataType").focusout(function(){
+                dataTError= dataTypeCheck();
+             });
+             $("#required").focusout(function(){
+                 requiredError= requiredCheck();
+             });
+             $("#minLength").focusout(function(){
+                 minLengthError= minLengthCheck();
+             });
+             $("#maxLength").focusout(function(){
+                  maxLengthError=maxLengthCheck();
+             });
+
+
+        });
+      function editColumnTable(){
+      
+       dataTError= dataTypeCheck();
+       fnameEror=  fieldNameCheck();
+       maxLengthError=  maxLengthCheck();
+       minLengthError=  minLengthCheck();
+       requiredError= requiredCheck();
+
+            if(fnameEror && dataTError  &&  requiredError && minLengthError &&   maxLengthError){
+
+                //editColumn();
+                checkEditColumnExit();
+            }
+    }
+    function  checkEditColumnExit(){
+        $.ajax({
+            url: "/Home/checkEditColumnExit",
+            type: "POST",
+             data: {
+                id:$("#id").val(),
+                columnName: $("#fieldName").val()
+            },
+            success: function (data) {
+              if(data==1){
+                   editColumn();
+                  $("#invalidEditColumnExist").html("");
+              }
+              else if(data==0)
+                $("#invalidEditColumnExist").html("Column Name already Exit.");
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>
+

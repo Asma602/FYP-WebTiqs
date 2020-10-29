@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = "_EmptyLayout";
+}
+
+<style>
+    .overlay {
+        position: fixed; /* Positioning and size */
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(128,128,128,0.5); /* color */
+        display: none; /* making it hidden by default */
+    }
+    .modal {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: solid 1px #000;
+        display: none;
+        background-color: #fff;
+       
+    }
+</style>
+        <div id="myConfirmModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#00b297;">
+                        @* <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+                        <h4 class="modal-title">Confirm you account</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>@ViewBag.ErrorTitle</h4>
+                        <p>@ViewBag.ErrorMessage</p>
+
+                        @*<a href="https://accounts.google.com/servicelogin" class="btn btn-block col-sm-4" style="background-color:#00b297" >Continue</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+  
+
+    function close_window() {
+        window.close();
+    }
+</script>

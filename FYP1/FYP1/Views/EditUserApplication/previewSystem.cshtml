@@ -1,0 +1,109 @@
+﻿@model FYP1.ViewModel.formsApplicationDatabase
+
+@{
+    ViewData["Title"] = "index";
+
+}
+
+<div class="container-fluid">
+    <nav class="navbar navbar-dark  row" style="background-color:black">
+        <div class="col-sm-3">
+            <a class="navbar-brand" href="#">
+                @*<input type="file" name="name" value="" />*@
+                <img src="~/logo/@Model.applicationDatabase.userApplications.appLogo" height="40" alt=" logo">
+            </a>
+        </div>
+
+        <div class="col-sm-8">
+            <h2 class="text-capitalize text-white">@Model.applicationDatabase.userApplications.appName</h2>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-sm-3 p-0">
+            <div id="sidebar" class=" p-2 elegant-color-dark">
+
+                <!-- sidebar menu start-->
+                <h6 class="font-weight-bold text-white mt-5"><i class="fa fa-tasks"></i> View or delete forms</h6>
+                <div id="formList">
+                    @{
+                        Html.RenderPartial("_FormList", Model.forms);
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6  mt-5 align-content-center" id="previewForm">
+            <h3 id="formHeading" class="heading"></h3>
+            <div id="formView">
+
+            </div>
+            <button type="button" style="visibility:hidden"  onclick="deletForm(this.id)" id="idDeleteForm" >Delete Form</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+  
+    function getFormView(idArg) {
+    var tableName=$("#table"+idArg).val();
+
+      //  console.log("tableName " +tableName);
+       // console.log($("#getFormTitle").text());
+        $.ajax({
+            url: '/EditUserApplication/getView',
+            type: 'POST',
+            data: {
+                getFormId : idArg,
+                tableName:tableName
+            },
+            success: function (data) {
+                $("#formView").html(data[0]);
+                    $("#formHeading").html(data[1]);
+                    $("#tabName").html(data[2]);
+                     document.getElementById('idDeleteForm').style.visibility = 'visible';
+                    document.getElementById('idDeleteForm').id= idArg;
+                   
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+    function deletForm(id){
+        $.ajax({
+            url: '/EditUserApplication/deleteForm',
+            type: 'POST',
+            data: {
+                FormId : id
+        },
+            success: function (data) {
+                $("#formView").html('');
+                $("#formHeading").html('');
+                $("#tabName").html('');
+                $("#formList").html(data);
+               document.getElementById(id).style.visibility = 'hidden';
+               document.getElementById(id).id= 'idDeleteForm';
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

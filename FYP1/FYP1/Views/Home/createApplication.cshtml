@@ -1,0 +1,62 @@
+﻿
+
+
+
+<link href="~/MDB/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/MDB/css/mdb.min.css" rel="stylesheet">
+<link href="~/css/HomeIndex.css" rel="stylesheet" />
+<link href="~/css/HomeCreateApp.css" rel="stylesheet" />
+<link href="~/css/BgImg.css" rel="stylesheet" />
+
+
+@section userNavItem{
+    <li class="nav-item dropdown float-lg-right">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">@Context.Session.GetString("userName")</a>
+        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Change Password</a>
+            
+            <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+        </div>
+    </li>
+}
+
+
+
+<div  style="height:737px; background-color:ghostwhite">
+    <section class="contentMainBody ml-0">
+        <div id="contentBody">
+            <div class="container" >
+                <div class="row" >
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-5">
+                        <div class="card ">
+                            <div class="card-header">
+                                <h5 class="font-weight-bolder">Create  Application </h5>
+                            </div>
+                            <form action="createApplication" method="post" novalidate id="applicationForm" enctype="multipart/form-data" class="p-2">
+                                <div class="card-body">
+                                    <input type="text" placeholder="Application Name" name="applicationName" id="databaseName" required class="form-control form-control-md">
+                                    <br />
+                                    <input type="password" placeholder="Password" name="apPassword" id="apPassword" required class="form-control form-control-md">
+                                    <br />
+                                    <input type="file" placeholder="Application Logo" name="Logo" id="Logo" required class="form-control form-control-md">
+                                    <span><small>* Choose your application logo</small></span>
+                                    <span class="text-danger ml-1">@ViewBag.errorMsg</span>
+                                    <span class="text-danger ml-1">@ViewBag.appErrorMsg</span>
+                                    <span class="text-danger ml-1">@ViewBag.lengthErrorMsg</span>
+                                    <button type="submit" class="btn" id="submitBtn">Next 
+                                    <span><i class="fa fa-angle-double-right ml-1"></i></span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+

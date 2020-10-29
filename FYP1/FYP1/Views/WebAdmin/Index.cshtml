@@ -1,0 +1,243 @@
+﻿
+@{
+    Layout = "_EmptyLayout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin's Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/AdminAssets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/AdminAssets/css/simple-sidebar.css" rel="stylesheet">
+    <link href="~/css/datatables.min.css" rel="stylesheet" />
+
+    <style>
+        .DarkBg {
+            background-color: #1D2939;
+        }
+
+        .DarkBg:hover {
+            border-bottom: 1px solid #00b297;
+            background-color: #1D2939;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class=" border-right DarkBg" id="sidebar-wrapper">
+            <div class="sidebar-heading "><span><i class="fa fa-user ml-5 fa-4x text-white"></i></span></div>
+            <div class="list-group list-group-flush">
+                <button class="list-group-item  text-white DarkBg">
+                    <h4>WebTiqs Admin</h4>
+                </button>
+                <button onclick="viewUsers()" class="list-group-item mr-5
+                        text-white DarkBg">
+                    <span><i class="fa fa-list-alt mr-3"></i></span>View Users
+                </button>
+                <button onclick="viewApps()" class="list-group-item text-white  DarkBg">
+                    <span><i class="fa fa-list-alt mr-3"></i></span>View Applications
+                </button>
+                <button onclick="viewFeedbacks()" class="list-group-item mr-3 text-white  DarkBg">
+                    <span><i class="fa fa-list-alt mr-3"></i></span>View Feedbacks
+                </button>
+                <button onclick="viewFeedbacks()" class="list-group-item text-white  DarkBg">
+                </button>
+
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light  border-bottom py-1"
+                 style="box-shadow:none;background-color:#1D2939">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li class="nav-item z-depth-1 p-2">
+                            <a class="nav-link text-white mt-2 " asp-controller="WebAdmin" asp-action="logout">
+                                <span><i class="fa fa-sign-out mr-2"></i></span>Log out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid mt-5 ml-4">
+
+                <h2 id="tableHeading"></h2>
+                <hr />
+                <div id="viewData" class="col-sm-9" style="background-color:ghostwhite">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" defer></script>
+    <script>
+        function viewUsers() {
+            $.ajax({
+                url: "/WebAdmin/viewUsers",
+                type: "GET",
+                success: function (data) {
+                    $("#tableHeading").text("List of Users");
+                    $("#viewData").html(data);
+                    $("#viewDataTable").DataTable();
+                },
+                error: function (err) {
+                    $("#tableHeading").text("No Users Are Registered!"),
+                        console.log(err);
+                }
+
+            });
+        }
+        function viewApps() {
+            $.ajax({
+                url: "/WebAdmin/viewApps",
+                type: "GET",
+                success: function (data) {
+                    $("#tableHeading").text("List of Applications");
+                    $("#viewData").html(data);
+                    $("#viewDataTable").DataTable();
+                },
+                error: function (err) {
+                    $("#tableHeading").text("No Applications Have Been Created!"),
+                        console.log(err);
+                }
+
+            });
+        }
+        function viewFeedbacks() {
+            $.ajax({
+                url: "/WebAdmin/viewFeedbacks",
+                type: "GET",
+                success: function (data) {
+                    $("#tableHeading").text("Queries from Users");
+                    $("#viewData").html(data);
+                    $("#viewDataTable").DataTable();
+                },
+                error: function (err) {
+                    $("#tableHeading").text("No Queries From Users!"),
+                        console.log(err);
+                }
+
+            });
+        }
+
+    </script>
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/AdminAssets/vendor/jquery/jquery.min.js"></script>
+    <script src="~/AdminAssets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });</script>
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model IEnumerable<FYP1.Models.Admin>
+
+    @{
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+    }
+
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.userName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.password)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.userName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.password)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AdminId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AdminId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AdminId">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

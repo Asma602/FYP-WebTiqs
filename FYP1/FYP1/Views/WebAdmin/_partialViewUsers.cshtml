@@ -1,0 +1,25 @@
+﻿@model IEnumerable<FYP1.Models.user>
+
+
+    <table class="table table-bordered " id="viewDataTable">
+        <thead>
+            <tr class="font-weight-bold">
+                <th>Name</th>
+                <th>Email Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                    </tr>
+                }
+
+            }
+
+        </tbody>
+
+    </table>

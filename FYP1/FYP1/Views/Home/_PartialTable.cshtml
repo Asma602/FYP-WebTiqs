@@ -1,0 +1,115 @@
+﻿
+    <link href="~/css/HomeCreateApp.css" rel="stylesheet" />
+
+    <style>
+
+        .submitBtn {
+            background-color: #00b297;
+            border-radius: 5px;
+            width:180px;
+        }
+    </style>
+
+<section class="contentMainBody">
+    <div id="contentBody">
+        <div class="container">
+            <div class="row" >
+                <div class="col-sm-6  ml-5">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h5 class="font-weight-bolder">Create Table </h5>
+                        </div>
+
+                        <div class="card-body">
+                            <input type="text" placeholder="Table Name" id="tableName" class="form-control form-control-md">
+                            <span id="invalidTable" style="color:red">*Invalid Table Name</span>
+                            <span id="invalidTaleExist" class="text-danger" ></span>
+
+                            <button onclick="checkTableExist();" type="submit" class="btn mb-3 submitBtn mt-3" 
+                                    id="tableButton">Next <i class="fa fa-angle-double-right ml-2"></i></button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function checkTableExist(){
+    $.ajax({
+            url: "/Home/checkTableExist",
+            type: "POST",
+             data: {
+                tableName: $("#tableName").val()
+            },
+            success: function (data) {
+              if(data==1){
+                addTableName();
+                  $("#invalidTaleExist").html("");
+              }
+              else if(data==0)
+                    $("#invalidTaleExist").html("Table Name already Exit.");
+              else if(data == -1){
+                    $("#invalidTaleExist").html("Table name can't be empty!");
+                }
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+     function addTableName(){
+        $.ajax({
+            url: "/Home/addTableName",
+            type: "POST",
+             data: {
+                tableName: $("#tableName").val()
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+     var  tableError=true;
+    $(function() {
+            $("#invalidTable").hide();
+            $("#tableName").focusout(function(){
+             tableNameCheck();
+             });
+            $("#databaseForm").submit(function(){
+                 tableNameCheck();
+
+                return tableError;
+            });
+
+
+        });
+
+      function tableNameCheck(){
+         var regex = /^[A-Za-z_]{1,64}$/;
+            var reg=new RegExp(regex);
+                var databaseName=$("#tableName").val();
+                if(reg.test(databaseName)){
+                    $("#tableName").css("border-color","#D8D8D8");
+                     $("#invalidTable").hide();
+                     $("#tableButton").removeClass("disabled");
+                     $("#tableButton").addClass("active");
+                     tableError=true;
+                }
+                else{
+                     $("#tableName").css("border-color","red");
+                        $("#invalidTable").show();
+                        $("#tableButton").addClass("disabled");
+                     tableError=false;
+                  }
+
+    }
+</script>

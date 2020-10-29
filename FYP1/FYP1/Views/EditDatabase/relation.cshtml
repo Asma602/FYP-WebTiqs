@@ -1,0 +1,103 @@
+﻿@model FYP1.ViewModel.tableRelation
+
+@{ 
+    Layout = "_EmptyLayout";
+}
+
+<link href="~/css/HomeIndex.css" rel="stylesheet" />
+<link href="~/css/HomeCreateApp.css" rel="stylesheet" />
+
+
+<link href="~/css/partialSideBar.css" rel="stylesheet" />
+
+<style>
+    .doneEditingLink {
+        background-color: transparent;
+        border-bottom: 1px solid #00b297;
+        color: black;
+        text-align: center;
+        float: right;
+    }
+</style>
+
+<div class="row">
+    <nav class="navbar col-sm-12 ">
+        <div class="col-sm-1">
+
+        </div>
+
+        <div class="col-sm-7 ">
+            <h3 class="text-capitalize text-dark font-weight-bold " style="text-align:center">@ViewBag.DatbaseName Database</h3>
+        </div>
+        <div class="col-sm-2">
+            <a asp-action="index" asp-controller="user" class="doneEditingLink">Finish Editing</a>
+        </div>
+        <div class="col-sm-2 ">
+            <li class="nav-item dropdown ml-5" style="list-style: none">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">@Context.Session.GetString("userName")</a>
+                <div class="dropdown-menu dropdown-primary float-left" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item " asp-controller="User" asp-action="ChangePassword">Change Password</a>
+                    <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+
+                </div>
+            </li>
+        </div>
+    </nav>
+
+</div>
+
+    <aside id="slideBarPTables">
+        @{
+            Html.RenderPartial("_partialSlideBar", Model.tables);
+        }
+    </aside>
+
+    <div id="mainContainer">
+        @{
+            Html.RenderPartial("_PartialMakeRelation", Model);
+        }
+    </div>
+    <div id="viewRelation">
+
+    </div>
+<script>
+    function createTable() {
+        $.ajax({
+            url: "/EditDatabase/partialTable",
+            type: "GET",
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+
+
+
+    function addColumn() {
+        $.ajax({
+            url: "/EditDatabase/addColumns",
+            type: "POST",
+            data: {
+                fieldName: $("#fieldName").val(),
+                dataType: $("#dataType").val(),
+                required: $("#required").val(),
+                required: $("#minLength").val(),
+                required: $("#maxLength").val(),
+                required: $("#fKey").val(),
+            },
+            success: function (data) {
+                $("#disPlayColumns").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+
+</script>
+
+

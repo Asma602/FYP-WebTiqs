@@ -1,0 +1,10 @@
+﻿@model IEnumerable<FYP1.Models.Form>
+<ul class="sidebar-menu mt-1" id="nav-accordion">
+    @foreach (var item in Model)
+    {
+        <li class="sub-menu" onclick="getFormView(this.id) " id=@item.formId>
+            <a class=" p-2 text-white " id="getFormTitle">@item.tableName</a>
+        </li>
+
+    }
+</ul>

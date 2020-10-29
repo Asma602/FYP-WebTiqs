@@ -1,0 +1,89 @@
+﻿@model FYP1.Models.user
+
+@{ 
+    Layout = "_EmptyLayout";
+}
+    <style>
+        #signUpBtn:hover{
+            box-shadow:2px 3px #c0d2d4;
+        }
+        #googleBtn:hover {
+            box-shadow: 2px 3px #c0d2d4;
+        }
+        .styleSignUpBody {
+            /*background-color: #00b297;*/
+            background-image: url('../images/signUpBg.jpg');
+            /*background-image: radial-gradient(circle, #00b297,#1D2939);*/
+        }
+        .styleSubmitBtn {
+            background-color: #00b297;
+        }
+        .setBorderColor{
+            border: 1px solid #00b297;
+        }
+       
+    </style>
+
+    <body class="styleSignUpBody">
+        
+        <div class="container-fluid " >
+            <div class="row p-5">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-5 bg-white pb-5 ml-5 mt-2 setBorderColor">
+
+                    <form class="text-center p-5 m-0 " asp-action="SignUp">
+
+                        <div class="form-row mb-2">
+                            <div class="col pull-left">
+                                <h4>Welcome to WebTiqs!</h4>
+                                <span class="h4 mb-4 bold">Create Account</span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-row mb-4">
+                            <div class="col">
+                                <input type="text" asp-for="UserName" id="defaultRegisterFormFirstName" required class="form-control" placeholder="Full name">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <input type="email" id="defaultRegisterFormEmail" asp-for="Email" required class="form-control mb-4" placeholder="Email Address">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        
+
+                        <input type="password" asp-for="Password" id="defaultRegisterFormPassword" required class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                        <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                            *At least 8 characters (small & caps), 1 digit, and a special character
+                        </small>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <div id="errorMsg"></div>
+
+                        <button class="btn text-white my-4 btn-block styleSubmitBtn" id="signUpBtn" type="submit">Sign Up</button>
+
+                        <span>@ViewBag.errorMsg</span>
+                        <hr>
+                        <p>
+                            By clicking
+                            <em>Sign up</em> you agree to our
+                            <a href="" target="_blank" style="color: #00b297">terms of service</a>
+                        </p>
+                        <p>
+                            Already have an account?
+                            <a asp-action="Login" target="_blank" style="color: #00b297">Login</a>
+                        </p>
+
+                    </form>
+
+
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript" src="~/js/SignUp.js"></script>
+    </body>
+    
+

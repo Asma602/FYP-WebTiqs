@@ -1,0 +1,12 @@
+﻿#logo {
+    margin-top: 2px;
+}
+
+#applicationForm input {
+    margin-bottom: 6px;
+}
+
+#submitBtn {
+    background-color: #00b297;
+    border-radius:5px;
+}

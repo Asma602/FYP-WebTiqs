@@ -1,0 +1,8 @@
+﻿.setBgImg {
+    background-image: url('../bgImg.jpg');
+    background-size: cover;
+    height: 663px;
+}
+.contentBody {
+    margin-left:0px;
+}

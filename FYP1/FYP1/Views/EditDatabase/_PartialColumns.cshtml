@@ -1,0 +1,360 @@
+﻿@model IEnumerable<FYP1.Models.Column>
+
+
+<style>
+    .backColor {
+        background-color: #00b297;
+    }
+
+    .inputWidth {
+        font-size: 13px;
+    }
+
+    .btns {
+        background-color: #00b297;
+        border-radius: 5px;
+        width: 120px;
+    }
+
+    .columnsDisplay {
+        margin-left: 130px;
+    }
+</style>
+
+<section class="columnsDisplay" id="disPlayColumns">
+    <span id="invalidColumnExist" style="color:red"></span>
+    <form>
+
+        <div class="form-row">
+            <div class="col" id="firstChild">
+                <input type="text" class="form-control inputWidth" id="fieldName" placeholder="Attribute name"><span id="invalidFieldName" style="color:red">*</span>
+            </div>
+            <div class="col mt-3">
+                <select class="form-control inputWidth" id="dataType">
+                    <option selected disabled>choose</option>
+                    <option value="int">Number</option>
+                    <option value="string">text</option>
+                    <option value="date">Date</option>
+                    <option value="boolean">True/False</option>
+                    <option value="email">Email</option>
+                    <option value="password">Password</option>
+                    @*<option value="file">File</option>*@
+                    <option value="url">Web Link</option>
+                    @*<option value="search">Search</option>*@
+                    @*<option value="date">Date</option>*@
+                    <option value="textarea">Text Area</option>
+                </select><span id="invalidDataType" hide style="color:red">*</span>
+            </div>
+            <div class="col mt-3">
+                <select class="form-control inputWidth" id="required">
+                    <option selected disabled>Is Required</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+
+                </select><span id="invalidRequired" hide style="color:red">*</span>
+            </div>
+            <div class="col">
+                <input type="number" class="form-control inputWidth" id="minLength" placeholder="Min Length" min="1"><span id="invalidMinLength" hide style="color:red">*</span>
+            </div>
+            <div class="col">
+                <input type="number" class="form-control inputWidth" id="maxLength" placeholder="Max Length" min="1"><span id="invalidMaxLength" hide style="color:red">*</span>
+            </div>
+
+            <div class="col" id="lastChild">
+                <input type="button" onclick="addColToTable();" class="btn backColor btns  " value="Add">
+            </div>
+            <div class="col" id="lastChild">
+                <input type="button" onclick="saveTable();" id="saveTableId" class="btn  backColor btns" disabled value="Save">
+            </div>
+        </div>
+    </form>
+    <table class="table table-hover table-bordered table-light">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Attribute Name</th>
+                <th scope="col">Data Type</th>
+                <th scope="col">Is Required</th>
+                <th scope="col">Min Length</th>
+                <th scope="col">Max Length</th>
+
+                <th scope="col">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                string cID = "column" + item.id;
+                string required;
+                if(item.required == 0)
+                {
+                    required = "No";
+                }
+                else
+                {
+                    required = "Yes";
+                }
+
+                <tr>
+                    <td id=@cID>@item.name</td>
+                    <td>@item.dataType</td>
+                    <td>@required</td>
+                    <td>@item.minLength</td>
+                    <td>@item.maxLength</td>
+                    <td><a onclick="updateEditColumn(@item.id)"><i class="fa fa-edit"></i></a> 
+                    <a onclick="deleteEditDbColumn(@item.id)" class="fa fa-trash-o ml-3"></a> 
+                      </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</section>
+<div id="deleteFormField" hidden>
+    
+</div>
+<script>
+    function saveTable(){
+     $.ajax({
+            url: "/EditDatabase/saveTable",
+            type: "GET",
+            success: function (data) {
+                $("#slideBarPartialEdit").html(data);
+                location.reload();
+            },
+            error: function (err) {
+                console.error();
+            }
+     });
+        $("#disPlayColumns").html(" ");
+
+    }
+
+    function addColumn(){
+         $.ajax({
+            url: "/Home/addColumns",
+            type: "POST",
+             data: {
+                fieldName:$("#fieldName").val(),
+                dataType:$("#dataType").val(),
+                required:$("#required").val(),
+                minLength:$("#minLength").val(),
+                maxLength:$("#maxLength").val(),
+                fKey:$("#fKey").val(),
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+    function deleteEditDbColumn(n){
+        console.log($("#column" + n).html());
+
+        if (confirm("Are you sure you want to delete this column?")) {
+
+            $.ajax({
+                url: "/EditDatabase/deleteColumn",
+                type: "POST",
+                data: {
+                    columnName: $("#column" + n).html()
+                },
+                success: function (data) {
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            $("#deleteFormField").html(data[i]);
+                            var colName = $("#column" + n).html();
+                            var labelId = "label" + colName
+                            var elem = document.getElementById($("#column" + n).html());
+                            elem.parentNode.removeChild(elem);
+                            var elem1 = document.getElementById(labelId);
+                            elem1.parentNode.removeChild(elem1);
+
+                            saveUpdateForm();
+                        }
+                    }
+                    else {
+                        getAllColumnsofTables();
+                    }
+                },
+                error: function (err) {
+                    console.error();
+                }
+            });
+        }
+        else {
+            return;
+        }
+       
+    }
+    function getAllColumnsofTables(){
+         $.ajax({
+                url: "/EditDatabase/getAllColumnsofTables",
+                type: "GET",
+           
+                success: function (data) {
+                    $("#mainContainer").html(data);
+                },
+                error: function (err) {
+                    console.error();
+                }
+            });
+     }
+    function saveUpdateForm(){ 
+    elms = $("#deleteFormField").html();
+    console.log(elms);
+     $.ajax({
+            url: "/EditDatabase/saveUpdateForm",
+            type: "POST",
+             data: {
+               formString:elms
+            },
+            success: function (data) {
+              $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+    function updateEditColumn(n){
+      $.ajax({
+            url: "/EditDatabase/updateColumn",
+            type: "POST",
+             data: {
+               columnName:$("#column"+n).html()
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>
+
+<script>
+
+
+    $(function() {
+     var  fnameEror=1;
+        var  dataTError=1;
+        var  requiredError=1;
+        var  minLengthError=1;
+        var  maxLengthError=1;
+         if(@Model.Count()>0)
+               $("#saveTableId").prop('disabled',false);
+        else
+       $("#saveTableId").prop('disabled',);
+            $("#invalidFieldName").hide();
+              $("#invalidDataType").hide();
+              $("#invalidRequired").hide();
+              $("#invalidMinLength").hide();
+              $("#invalidMaxLength").hide();
+            $("#fieldName").focusout(function(){
+                 fnameEror=fieldNameCheck();
+             });
+            $("#dataType").focusout(function(){
+                dataTError= dataTypeCheck();
+             });
+             $("#required").focusout(function(){
+                 requiredError= requiredCheck();
+             });
+             $("#minLength").focusout(function(){
+                 minLengthError= minLengthCheck();
+             });
+             $("#maxLength").focusout(function(){
+                  maxLengthError=maxLengthCheck();
+             });
+
+        });
+
+      function addColToTable(n){
+
+       dataTError= dataTypeCheck();
+       fnameEror=  fieldNameCheck();
+       maxLengthError=  maxLengthCheck();
+       minLengthError=  minLengthCheck();
+       requiredError= requiredCheck();
+
+
+            if(fnameEror && dataTError  &&  requiredError && minLengthError &&   maxLengthError){
+              // addColumn();
+               // $("#saveTableId").prop('disabled',false);
+                     checkColumnExit();
+                
+            }
+            else{
+                $("#saveTableId").prop('disabled',true);
+            }
+    }
+    function checkCExit(){
+         $.ajax({
+            url: "/EditDatabase/checkCExit",
+            type: "POST",
+             data: {
+                columnName: $("#fieldName").val()
+            },
+            success: function (data) {
+              if(data==1){
+                   addColumn();
+                 $("#saveTableId").prop('disabled',false);
+
+                  $("#invalidColumnExist").html("");
+              }
+              else if(data==0)
+                $("#invalidColumnExist").html("Column Name already Exit.");
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+    function checkColumnExit(){
+         $.ajax({
+            url: "/EditDatabase/checkColumnExit",
+            type: "POST",
+             data: {
+                columnName: $("#fieldName").val()
+            },
+            success: function (data) {
+              if(data==1){
+                   addColumn();
+                 $("#saveTableId").prop('disabled',false);
+
+                  $("#invalidColumnExist").html("");
+              }
+              else if(data==0)
+                $("#invalidColumnExist").html("Column Name already Exit.");
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+      function addColumn(){
+         $.ajax({
+            url: "/EditDatabase/addColumns",
+            type: "POST",
+             data: {
+                fieldName:$("#fieldName").val(),
+                dataType:$("#dataType").val(),
+                required:$("#required").val(),
+                minLength:$("#minLength").val(),
+                maxLength:$("#maxLength").val(),
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function (err) {
+                console.error();
+            }
+        });
+    }
+</script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/js/columnValidation.js"></script>
